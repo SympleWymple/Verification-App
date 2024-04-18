@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <title>verify</title>
+</head>
+
+<body>
+    <div class="imageContainer"></div>
+    <div class="wrapper">
+        <div class="container">
+            <input type="radio" name="slide" id="c1" checked>
+            <label for="c1" class="card">
+                <div class="discordPicture">
+                    <img src=<%=discordAvatar %> alt="discord"
+                    class="pfp">
+                </div>
+                <div class="discordInfo">
+                    <h1>
+                        <%= discordUsername %>
+                    </h1>
+                    <p>Please click the button below to begin
+                        <br>your discord to roblox verification
+                    </p>
+
+                    <a class="button" href= 'https://authorize.roblox.com/?client_id=5343693020494668183&response_type=Code&redirect_uri=https://hazyba-verification.netlify.app/redirect&scope=openid+profile&state=' + <%=link %> >Verify</a>
+                </div>
+
+            </label>
+        </div>
+    </div>
+</body>
+
+</html>
