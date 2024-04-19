@@ -34,13 +34,22 @@ app.get('', (req, res) => {
     }
 })
 
-app.get("/:id", (req, res) => {
+app.get("/verify-:id", (req, res) => {
     try{
     res.render('verify', {link: req.id, discordUsername: req.query.discordUsername, discordAvatar: req.query.discordPfp})
     }catch{
         // display error opage
         res.render('error')
     }
+})
+
+app.get('/tos', (req, res) => {
+    // display tos page
+    res.render('tos')
+})
+app.get('/privacy', (req, res) => {
+    // display tos page
+    res.render('privacy')
 })
 
 app.get('/redirect', async(req, res) => {
