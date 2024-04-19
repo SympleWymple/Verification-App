@@ -4,7 +4,9 @@ const port = 3001
 const config = require('./Utilities/config.json')
 const discord = require('discord.js')
 const schema = require('./Utilities/schema.js');
-const Mongoose = require('mongoose');
+const mongoose = require('mongoose');
+
+const clientOptions = { serverApi: { version: '1', strict: true, deprecationErrors: true } };
 
 
 app.use(express.static('public'))
@@ -19,7 +21,9 @@ app.set('views', './views')
 app.set('view engine', 'ejs')
 
 try {
-    Mongoose.connect(config.MongooseURI);
+    // Create a Mongoose client with a MongoClientOptions object to set the Stable API version
+    mongoose.connect(config.MongooseURI, clientOptions);
+    console.log("Pinged your deployment. You successfully connected to MongoDB!");
 } catch (err) {
     console.log(err);
 }
@@ -28,16 +32,16 @@ app.get('', (req, res) => {
     // display home page
     try {
         res.render('home')
-    } catch{
+    } catch {
         // display error page
         res.render('error')
     }
 })
 
 app.get("/verify-:id", (req, res) => {
-    try{
-    res.render('verify', {link: req.id, discordUsername: req.query.discordUsername, discordAvatar: req.query.discordPfp})
-    }catch{
+    try {
+        res.render('verify', { link: req.id, discordUsername: req.query.discordUsername, discordAvatar: req.query.discordPfp })
+    } catch {
         // display error opage
         res.render('error')
     }
@@ -52,7 +56,7 @@ app.get('/privacy', (req, res) => {
     res.render('privacy')
 })
 
-app.get('/redirect', async(req, res) => {
+app.get('/redirect', async (req, res) => {
     // make code into string
     const code = req.query.code
     const state = req.query.state
@@ -108,7 +112,7 @@ app.get('/redirect', async(req, res) => {
                         const username = userInfo.preferred_username
                         const member = await guild.members.fetch(user.id)
 
-                        if (member.id === guild.ownerId) {} else {
+                        if (member.id === guild.ownerId) { } else {
                             member.setNickname(username)
                         }
 

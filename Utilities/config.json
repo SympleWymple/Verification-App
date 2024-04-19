@@ -9,7 +9,7 @@
     "darkGreen": "#008369",
     "robloxclientID": "5343693020494668183",
     "robloxtoken": "RBX-eq6-1HBvAkCSZtoc00TGBW2TMEexkyWnrHPabbs1bvrhYHWO7bcwYp4QWD98jyC5",
-    "MongooseURI": "mongodb+srv://sztolu:G9OoeVGY0wp67RwS@discordbot.4fesrk3.mongodb.net/?retryWrites=true&w=majority&appName=DiscordBot",
+    "MongooseURI": "mongodb+srv://sztolu:oEHncoSb7S4EqTez@discordbot.4fesrk3.mongodb.net/?retryWrites=true&w=majority&appName=DiscordBot",
     "port": "80",
     "verificationChannel": "1228770029697372333"
 }
