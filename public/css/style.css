@@ -86,9 +86,9 @@ body {
  }
 
 .discordInfo a {
-   position: absolute;
-   margin-top: 5%;
-   margin-left: 11%;
+   position: fixed;
+   margin-top: 30px;
+   margin-left: 130px;
    text-wrap: wrap;
    text-align: center;
 }

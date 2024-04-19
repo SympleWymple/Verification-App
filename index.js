@@ -25,12 +25,22 @@ try {
 }
 
 app.get('', (req, res) => {
-    console.log(req.query)
+    // display home page
+    try {
+        res.render('home')
+    } catch{
+        // display error page
+        res.render('error')
+    }
 })
 
 app.get("/:id", (req, res) => {
-    res.render('index', {link: req.id, discordUsername: req.query.discordUsername, discordAvatar: req.query.discordPfp})
-  
+    try{
+    res.render('verify', {link: req.id, discordUsername: req.query.discordUsername, discordAvatar: req.query.discordPfp})
+    }catch{
+        // display error opage
+        res.render('error')
+    }
 })
 
 app.get('/redirect', async(req, res) => {
@@ -131,4 +141,4 @@ app.get('/redirect', async(req, res) => {
 
 
 
-app.listen(process.env.PORT, () => console.log(`app listening on port ${port}!`))
+app.listen(process.env.PORT || port, () => console.log(`app listening on port ${process.env.PORT || port}!`))

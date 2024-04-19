@@ -1,0 +1,39 @@
+body {
+    background-color: #1E212B
+}
+
+.vertical-center {
+    min-height: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+h1 {
+    color: #ffffff
+}
+h2 {
+    color: #ffffff
+}
+
+
+p {
+    color: #ffffff
+}
+
+.footer {
+    min-height: 100%;
+    margin-top: 10%;
+    display: flex;
+    align-items: center;
+}
+
+#road {
+    height: 430px;
+    overflow: hidden;
+    transition: height .4s ease-out;
+}
+
+#road.active {
+    height: 600px;
+}
