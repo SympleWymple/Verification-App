@@ -5,6 +5,7 @@ const config = require('./Utilities/config.json')
 const discord = require('discord.js')
 const schema = require('./Utilities/schema.js');
 const mongoose = require('mongoose');
+const { render } = require('ejs')
 
 const clientOptions = { serverApi: { version: '1', strict: true, deprecationErrors: true } };
 
@@ -60,6 +61,7 @@ app.get('/redirect', async (req, res) => {
     // make code into string
     const code = req.query.code
     const state = req.query.state
+    res.render('home')
     try {
         const data = await schema.find({ statecode: state }).exec();
 
