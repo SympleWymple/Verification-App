@@ -1,11 +1,22 @@
+const { Client, IntentsBitField, Collection, Partials } = require('discord.js')
+const client = new Client({
+	partials: [Partials.Channel, Partials.User, Partials.GuildMember, Partials.Message],
+	intents: [IntentsBitField.Flags.Guilds,
+		IntentsBitField.Flags.GuildMessages,
+		IntentsBitField.Flags.MessageContent,
+		IntentsBitField.Flags.GuildMembers],
+})
+
 const express = require('express')
 const app = express()
 const port = 3001
+const axios = require('axios')
 const config = require('./Utilities/config.json')
 const discord = require('discord.js')
 const schema = require('./Utilities/schema.js');
 const mongoose = require('mongoose');
 const { render } = require('ejs')
+
 
 const clientOptions = { serverApi: { version: '1', strict: true, deprecationErrors: true } };
 
@@ -41,7 +52,7 @@ app.get('', (req, res) => {
 
 app.get("/verify-:id", (req, res) => {
     try {
-        res.render('verify', { link: req.id, discordUsername: req.query.discordUsername, discordAvatar: req.query.discordPfp })
+        res.render('verify', { link: req.params.id, discordUsername: req.query.discordUsername, discordAvatar: req.query.discordPfp} )
     } catch {
         // display error opage
         res.render('error')
@@ -61,24 +72,23 @@ app.get('/redirect', async (req, res) => {
     // make code into string
     const code = req.query.code
     const state = req.query.state
-    res.render('home')
+    
     try {
         const data = await schema.find({ statecode: state }).exec();
-
+        console.log(data)
         if (data.length === 0) {
-            res.send('An error occurred');
+           res.render('error')
             res.status(404);
             res.end();
         } else {
             const user = await client.users.fetch(data[0].discordID);
-
+            console.log(user)
             if (!user) {
-                res.send('An error occurred');
+                res.render('error')
                 res.status(404);
                 res.end();
             } else {
                 res.status(200);
-                res.send('You may close this tab now');
                 const params = new URLSearchParams();
                 params.append("client_id", config.robloxclientID);
                 params.append("client_secret", config.robloxtoken);
@@ -109,20 +119,22 @@ app.get('/redirect', async (req, res) => {
                         data[0].statecode = null;
                         await data[0].save();
 
-                        // change nickname to roblox username
-                        const guild = client.guilds.cache.get(config.guildID)
-                        const username = userInfo.preferred_username
-                        const member = await guild.members.fetch(user.id)
+                        res.render("success", {username: userInfo.preferred_username})
 
-                        if (member.id === guild.ownerId) { } else {
-                            member.setNickname(username)
-                        }
+                        // // change nickname to roblox username
+                        // const guild = client.guilds.cache.get(config.guildID)
+                        // const username = userInfo.preferred_username
+                        // const member = await guild.members.fetch(user.id)
 
-                        const embed = new discord.MessageEmbed()
-                            .setColor('GREEN')
-                            .setDescription(`Successfully verified ${user.tag}!`)
-                            .setTimestamp()
-                            .setFooter({ text: 'Success!' });
+                        // if (member.id === guild.ownerId) { } else {
+                        //     member.setNickname(username)
+                        // }
+
+                        // const embed = new discord.MessageEmbed()
+                        //     .setColor('GREEN')
+                        //     .setDescription(`Successfully verified ${user.tag}!`)
+                        //     .setTimestamp()
+                        //     .setFooter({ text: 'Success!' });
 
                         //client.channels.cache.get(config.verificationChannel).send({ embeds: [embed] });
                     } else {
@@ -154,6 +166,6 @@ app.get('/redirect', async (req, res) => {
 })
 
 
-
+client.login("MTIyODc4MjU4MTA4NDg0ODIzOA.GKu2nA.Sz27WhErqOe5raCb0LTfAtIV6lePut6Yvy6hV8")
 
 app.listen(process.env.PORT || port, () => console.log(`app listening on port ${process.env.PORT || port}!`))
