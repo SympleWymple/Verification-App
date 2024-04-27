@@ -6,6 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
     <title>verify</title>
+
+    <script>
+        function makeid(length) {
+            var result = '';
+            var characters = 'ABCDEFGHIJKLMNOPQRTUVWXYZabcdefghijklmnopqrtuvwxyz0123456789';
+            var charactersLength = characters.length;
+
+            for (var i = 0; i < length; i++) {
+                result += characters.charAt(Math.floor(Math.random() * charactersLength));
+            }
+
+            var code = result
+        return `https://authorize.roblox.com/?client_id=2281553968660777080&response_type=Code&redirect_uri=https://hazysbawebsite-d47adb08db27.herokuapp.com/redirect&scope=openid+profile&state=${code}`   
+        }
+    </script>
 </head>
 
 <body>
@@ -26,7 +41,10 @@
                         <br>your discord to roblox verification
                     </p>
 
-                    <a class="button" href= 'https://authorize.roblox.com/?client_id=2281553968660777080&response_type=Code&redirect_uri=https://hazysbawebsite-d47adb08db27.herokuapp.com/redirect&scope=openid+profile&state='+ <%=link%> >Verify</a>
+
+
+                    <a class="button"
+                        href="javascript:makeid(25)">Verify</a>
                 </div>
 
             </label>
